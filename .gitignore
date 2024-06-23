@@ -1,1 +1,5 @@
 .ipynb_checkpoints
+.env
+documents.json
+minsearch.py
+__pycache__
