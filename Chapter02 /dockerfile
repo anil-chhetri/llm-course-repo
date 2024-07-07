@@ -1,0 +1,18 @@
+# Use the base image for Ollama
+FROM ollama/ollama:latest
+
+# Create the models directory
+RUN mkdir -p /root/.ollama/models
+
+# Copy the phi3 model files into the container
+COPY ollama/models/ /root/.ollama/models/
+
+
+# Expose ports if needed (example)
+EXPOSE 11434
+
+# Command to run the container (if different from the base image)
+# CMD ["some-command"]
+
+# Use CMD from base image
+# CMD ["ll"]
