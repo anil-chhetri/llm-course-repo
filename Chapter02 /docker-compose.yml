@@ -1,4 +1,4 @@
-version: '3.8'
+
 
 services:
   elasticsearch:
@@ -10,12 +10,12 @@ services:
     environment:
       discovery.type: "single-node"  # Sets environment variable for single-node discovery.
       xpack.security.enabled: "false"  # Disables X-Pack security features.
-    restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]  # Health check command to verify the service.
-      interval: 30s  # Time between health check runs.
-      timeout: 10s  # Time to wait before considering the health check failed.
-      retries: 3  # Number of retries before considering the container unhealthy.
+    # restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
+    # healthcheck:
+    #   test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]  # Health check command to verify the service.
+    #   interval: 30s  # Time between health check runs.
+    #   timeout: 10s  # Time to wait before considering the health check failed.
+    #   retries: 3  # Number of retries before considering the container unhealthy.
 
   ollama:
     image: ollama/ollama  # Specifies the image to use.
@@ -24,11 +24,11 @@ services:
       - "11434:11434"  # Maps port 11434 on the host to port 11434 on the container.
     volumes:
       - ./ollama:/root/.ollama  # Mounts a local directory for persistent storage.
-    restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:11434 || exit 1"]  # Health check command to verify the service.
-      interval: 30s  # Time between health check runs.
-      timeout: 10s  # Time to wait before considering the health check failed.
-      retries: 3  # Number of retries before considering the container unhealthy.
+    # restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
+    # healthcheck:
+    #   test: ["CMD-SHELL", "curl -f http://localhost:11434 || exit 1"]  # Health check command to verify the service.
+    #   interval: 120s  # Time between health check runs.
+    #   timeout: 60s  # Time to wait before considering the health check failed.
+    #   retries: 3  # Number of retries before considering the container unhealthy.
 
 # No named volumes needed as we are directly mapping to a physical location.
