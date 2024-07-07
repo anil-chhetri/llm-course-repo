@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.4.3  # Specifies the image to use.
+    container_name: elasticsearch  # Names the container for easier identification.
+    ports:
+      - "9200:9200"  # Maps port 9200 on the host to port 9200 on the container.
+      - "9300:9300"  # Maps port 9300 on the host to port 9300 on the container.
+    environment:
+      discovery.type: "single-node"  # Sets environment variable for single-node discovery.
+      xpack.security.enabled: "false"  # Disables X-Pack security features.
+    restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]  # Health check command to verify the service.
+      interval: 30s  # Time between health check runs.
+      timeout: 10s  # Time to wait before considering the health check failed.
+      retries: 3  # Number of retries before considering the container unhealthy.
+
+  ollama:
+    image: ollama/ollama  # Specifies the image to use.
+    container_name: ollama  # Names the container for easier identification.
+    ports:
+      - "11434:11434"  # Maps port 11434 on the host to port 11434 on the container.
+    volumes:
+      - ./ollama:/root/.ollama  # Mounts a local directory for persistent storage.
+    restart: unless-stopped  # Ensures the container restarts unless explicitly stopped.
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:11434 || exit 1"]  # Health check command to verify the service.
+      interval: 30s  # Time between health check runs.
+      timeout: 10s  # Time to wait before considering the health check failed.
+      retries: 3  # Number of retries before considering the container unhealthy.
+
+# No named volumes needed as we are directly mapping to a physical location.
